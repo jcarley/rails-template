@@ -65,6 +65,7 @@ copy_from 'https://raw.github.com/jcarley/rails-template/master/files/gitignore.
 
 ## Front-end Framework
 generate 'foundation:install'
+remove_file 'app/assets/stylesheets/application.css'
 copy_from 'https://raw.github.com/jcarley/rails-template/master/files/application.css.scss', 'app/assets/stylesheets/application.css.scss'
 generate 'backbone:install'
 
