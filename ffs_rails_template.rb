@@ -61,7 +61,7 @@ end
 run "bundle install --binstubs --without production --path vendor/bundle"
 
 # We have to add the .gitignore before install figaro
-copy_from 'https://raw.github.com/RailsApps/rails-composer/master/files/gitignore.txt', '.gitignore'
+copy_from 'https://raw.github.com/jcarley/rails-template/master/files/gitignore.txt', '.gitignore'
 
 ## Front-end Framework
 generate 'foundation:install'
