@@ -32,7 +32,7 @@ gem_group :assets do
 end
 
 gem_group :development, :test do
-  gem "foreman", '~> 0.60.2'
+  gem "foreman", '~> 0.63.0'
   gem "rspec-rails", "~> 2.13.2"
   gem 'rb-inotify', :require => false if RUBY_PLATFORM =~ /linux/i
   gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
