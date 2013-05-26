@@ -83,13 +83,13 @@ run 'rm -rf test/' # Removing test folder (not needed for RSpec)
 
 inject_into_file 'config/application.rb', :after => "Rails::Application\n" do <<-RUBY
 
-  # don't generate RSpec tests for views and helpers
-  config.generators do |g|
-    g.test_framework :rspec
-    g.fixture_replacement :factory_girl
-    g.view_specs false
-    g.helper_specs false
-  end
+# don't generate RSpec tests for views and helpers
+config.generators do |g|
+  g.test_framework :rspec
+  g.fixture_replacement :factory_girl
+  g.view_specs false
+  g.helper_specs false
+end
 
 RUBY
 end
@@ -97,9 +97,9 @@ end
 # configure RSpec to use matchers from the mongoid-rspec gem
 create_file 'spec/support/mongoid.rb' do
   <<-RUBY
-  RSpec.configure do |config|
-    config.include Mongoid::Matchers
-  end
+RSpec.configure do |config|
+  config.include Mongoid::Matchers
+end
   RUBY
 end
 
