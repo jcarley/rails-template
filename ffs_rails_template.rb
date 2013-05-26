@@ -64,6 +64,7 @@ run "bundle install --binstubs --without production --path vendor/bundle"
 copy_from 'https://raw.github.com/jcarley/rails-template/master/files/gitignore.txt', '.gitignore'
 copy_from 'https://raw.github.com/jcarley/rails-template/master/files/Procfile', 'Procfile'
 
+
 ## Front-end Framework
 generate 'foundation:install'
 remove_file 'app/assets/stylesheets/application.css'
@@ -105,6 +106,7 @@ end
 
 # Clean-up
 %w{
+  README.rdoc
   README
   doc/README_FOR_APP
   public/index.html
@@ -118,6 +120,11 @@ gsub_file 'Gemfile', /\n^\s*\n/, "\n"
 # remove commented lines and multiple blank lines from config/routes.rb
 gsub_file 'config/routes.rb', /  #.*\n/, "\n"
 gsub_file 'config/routes.rb', /\n^\s*\n/, "\n"
+
+append_file 'README.md' do <<-README
+Add your application description here
+README
+end
 
 git :init
 git :add => '. -A'
