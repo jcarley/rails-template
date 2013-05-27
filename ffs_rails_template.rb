@@ -85,12 +85,17 @@ generate 'rspec:install'
 run 'rm -rf test/' # Removing test folder (not needed for RSpec)
 
 inject_into_file 'config/application.rb', :after => "Rails::Application\n" do <<-RUBY
+
     # don't generate RSpec tests for views and helpers
     config.generators do |g|
-      g.test_framework :rspec
-      g.fixture_replacement :factory_girl
-      g.view_specs false
-      g.helper_specs false
+      g.test_framework :rspec,
+        fixtures: true,
+        view_specs: false,
+        helper_specs: false,
+        routing_specs: false,
+        controller_specs: true,
+        request_specs: true
+      g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
 
 RUBY
