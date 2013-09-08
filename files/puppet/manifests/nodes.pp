@@ -5,6 +5,7 @@ node default {
 
   $run_as_user    = "vagrant"
   $ruby_version   = "2.0.0-p247"
+  $home_dir       = "/home/${run_as_user}"
   $ruby_home_path = "/home/${run_as_user}/.rbenv/shims"
   $base_app_home  = "/home/${run_as_user}/apps"
 
