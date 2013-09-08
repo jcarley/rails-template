@@ -53,11 +53,11 @@ define puma::app(
     } ->
 
     exec {"run bundle ${app_path}":
-      command => "${ruby_home_path}/bundle install ${bundle_opts}",
+      command => "${ruby_home_path}/bundle install ${bundle_opts} --path vendor/bundle",
       cwd     => $app_path,
-      path    => [$path, "${path}:/bin:/usr/bin", "${ruby_home_path}/bin"],
-      user    => 'root',
-      group   => 'root',
+      path    => [$ruby_home_path, $path, "${path}:/bin:/usr/bin"],
+      user    => $run_as_user,
+      group   => $run_as_user,
       timeout => 0,
       notify  => Exec["run puma ${app_path}"],
     } ->
