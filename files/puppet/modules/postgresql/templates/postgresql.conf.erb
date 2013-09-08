@@ -1,6 +1,6 @@
-# -----------------------------
-# PostgreSQL configuration file
-# -----------------------------
+# ---------------------------------------------------------------
+# PostgreSQL configuration file - managed by puppet - DO NOT EDIT
+# ---------------------------------------------------------------
 #
 # This file consists of lines of the form:
 #
@@ -56,8 +56,8 @@ external_pid_file = '/var/run/postgresql/<%= @version %>-main.pid'		# write an e
 
 # - Connection Settings -
 
-<% if @listen.is_a? Array -%>
-listen_addresses = '<% @listen.each do |addr| -%><%= "#{addr}," %><% end -%>
+<% if listen.is_a? Array -%>
+listen_addresses = '<%= @listen.join ',' %>'
 <% else %>
 listen_addresses = '<%= @listen %>'
 <% end %>
@@ -82,7 +82,23 @@ unix_socket_directory = '/var/run/postgresql'		# (change requires restart)
 # - Security and Authentication -
 
 #authentication_timeout = 1min		# 1s-600s
-ssl = true				# (change requires restart)
+ssl = <%= @ssl %>				# (change requires restart)
+# If SSL is configured and Postgres 9.2+ is used,
+# you can specify the files for the used for the
+# server and root certificates, keys and revocation lists.
+<% if @ssl_ca_file -%>
+ssl_ca_file   = $ssl_ca_file     # default is 'root.crt'
+<% end -%>
+<% if @ssl_cert_file -%>
+ssl_cert_file = $ssl_cert_file   # default is 'server.crt'
+<% end -%>
+<% if @ssl_crl_file -%>
+ssl_crl_file  = $ssl_crl_file    # default is 'root.crl'
+<% end -%>
+<% if @ssl_key_file -%>
+ssl_key_file  = $ssl_key_file    # default is 'server.key'
+<% end -%>
+
 #ssl_ciphers = 'ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH'	# allowed SSL ciphers
 					# (change requires restart)
 #ssl_renegotiation_limit = 512MB	# amount of data between renegotiations
@@ -398,7 +414,6 @@ log_line_prefix = '%t '			# special values:
 					#   %q = stop here in non-session
 					#        processes
 					#   %% = '%'
-					# e.g. '<%u%%%d> '
 #log_lock_waits = off			# log lock waits >= deadlock_timeout
 #log_statement = 'none'			# none, ddl, mod, all
 #log_temp_files = -1			# log temporary files equal or larger
@@ -497,11 +512,10 @@ datestyle = 'iso, mdy'
 					# encoding
 
 # These settings are initialized by initdb, but they can be changed.
-lc_messages = 'en_GB.UTF-8'			# locale for system error message
-					# strings
-lc_monetary = 'en_GB.UTF-8'			# locale for monetary formatting
-lc_numeric = 'en_GB.UTF-8'			# locale for number formatting
-lc_time = 'en_GB.UTF-8'				# locale for time formatting
+lc_messages = '<%= @locale %>'			# locale for system error message strings
+lc_monetary = '<%= @locale %>'			# locale for monetary formatting
+lc_numeric = '<%= @locale %>'			# locale for number formatting
+lc_time = '<%= @locale %>'				# locale for time formatting
 
 # default configuration for text search
 default_text_search_config = 'pg_catalog.english'

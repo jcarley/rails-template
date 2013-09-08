@@ -21,7 +21,10 @@ class roles::database(
 
   class { 'postgresql':  } ->
 
-  class {'postgresql::server': } ->
+  class {'postgresql::server':
+    listen => ['*', ],
+    acl    => ['host all all 0.0.0.0/0 md5', 'local all all  trust'],
+  } ->
 
   postgresql::db { $db_name:
       owner    => $owner,

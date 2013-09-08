@@ -21,9 +21,15 @@ Puppet::Type.newtype(:pg_database) do
   end
 
   newparam(:locale) do
-    desc "The locale to use for collation. Typical values include 'C' or 'en_GB.UTF-8' or other specifiers"
+    desc "The locale to use for collation. Typical values include 'C' or 'en_US.UTF-8' or other specifiers"
 
-	defaultto :'en_GB.UTF-8'
+	defaultto :'en_US.UTF-8'
+  end
+
+  newparam(:template) do
+    desc "The default template to be used when creating the database. Defaults to 'template0'"
+
+	defaultto :'template0'
   end
 
 end
