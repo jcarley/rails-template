@@ -9,7 +9,7 @@ node default {
   $base_app_home  = "/home/${run_as_user}/apps"
 
   $application_name  = 'MyApplicationName'
-  $virtual_host     => "${application_name}"
+  $virtual_host      = "${application_name}"
 
   $database_name     = "${application_name}_development"
   $database_username = "${application_name}"
