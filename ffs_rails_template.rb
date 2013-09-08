@@ -13,24 +13,24 @@ end
 RUBY
 
 gem "puma", "~> 2.0.1"
-gem "mongoid", "~> 3.1.4"
-gem 'bson', '~> 1.8.0'
-gem 'bson_ext', '~> 1.8.0'
+# gem "mongoid", "~> 3.1.4"
+# gem 'bson', '~> 1.8.0'
+# gem 'bson_ext', '~> 1.8.0'
 gem 'slim-rails', '~> 1.1.1'
 gem "cancan", "~> 1.6.10"
 gem "rolify", ">= 3.2.0"
-gem "draper", '~> 1.2.1'
+# gem "draper", '~> 1.2.1'
 gem 'figaro'
-gem "backbone-on-rails", "~> 1.0.0.0"
-gem "marionette-rails", "~> 1.0.2"
+# gem "backbone-on-rails", "~> 1.0.0.0"
+# gem "marionette-rails", "~> 1.0.2"
+gem "zurb-foundation", "~> 4.1.6"
 
-gem_group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
-  gem "compass-rails", ">= 1.0.3"
-  gem "zurb-foundation", "~> 4.1.6"
-end
+# gem_group :assets do
+  # gem 'sass-rails',   '~> 3.2.3'
+  # gem 'coffee-rails', '~> 3.2.1'
+  # gem 'uglifier', '>= 1.0.3'
+  # gem "compass-rails", ">= 1.0.3"
+# end
 
 gem_group :development, :test do
   gem "foreman", '~> 0.63.0'
@@ -52,14 +52,14 @@ gem_group :test do
   gem "capybara"
   gem 'shoulda-matchers'
   gem "database_cleaner", "~> 1.0.1"
-  gem "mongoid-rspec", "~> 1.8.2"
+  # gem "mongoid-rspec", "~> 1.8.2"
   gem "launchy", ">= 2.1.2"
   gem 'vcr', '~> 2.3.0'
   gem 'webmock'
 end
 
 # Run bundler
-run "bundle install --binstubs --without production --path vendor/bundle"
+run "bundle install --without production --path vendor/bundle"
 
 # We have to add the .gitignore before install figaro
 copy_from 'https://raw.github.com/jcarley/rails-template/master/files/gitignore.txt', '.gitignore'
@@ -70,7 +70,6 @@ copy_from 'https://raw.github.com/jcarley/rails-template/master/files/Procfile',
 generate 'foundation:install'
 remove_file 'app/assets/stylesheets/application.css'
 copy_from 'https://raw.github.com/jcarley/rails-template/master/files/application.css.scss', 'app/assets/stylesheets/application.css.scss'
-generate 'backbone:install'
 
 ## Figaro ENV configurations
 generate 'figaro:install'
@@ -102,13 +101,13 @@ RUBY
 end
 
 # configure RSpec to use matchers from the mongoid-rspec gem
-create_file 'spec/support/mongoid.rb' do
-  <<-RUBY
-RSpec.configure do |config|
-  config.include Mongoid::Matchers
-end
-  RUBY
-end
+# create_file 'spec/support/mongoid.rb' do
+  # <<-RUBY
+# RSpec.configure do |config|
+  # config.include Mongoid::Matchers
+# end
+  # RUBY
+# end
 
 # Clean-up
 %w{

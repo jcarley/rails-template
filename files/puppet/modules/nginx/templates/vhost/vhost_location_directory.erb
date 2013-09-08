@@ -1,0 +1,15 @@
+  location <%= @location %> {
+<% if @location_cfg_prepend -%><% location_cfg_prepend.each do |key,value| -%>
+    <%= key %> <%= value %>;
+<% end -%><% end -%>
+    root  <%= @www_root %>;
+    <% if @try_files then %>
+    try_files <% @try_files.each do |try| -%> <%= try %> <% end -%>;
+    <% end %>
+    <% if @index_files then %>
+    index <% index_files.each do |i| %> <%= i %> <% end %>; 
+    <% end %>
+<% if @location_cfg_append -%><% @location_cfg_append.each do |key,value| -%>
+    <%= key %> <%= value %>;
+<% end -%><% end -%>
+  }

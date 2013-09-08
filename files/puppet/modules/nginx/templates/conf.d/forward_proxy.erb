@@ -1,0 +1,17 @@
+
+server {
+    listen       <%= @listen %>;
+
+    access_log            <%= @access_log %>;
+    error_log            <%= @error_log %>;
+
+    location / {
+        resolver <%= @resolver %>;
+        proxy_pass http://$http_host$uri$is_args$args;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   html;
+    }
+}
