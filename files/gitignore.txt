@@ -8,6 +8,7 @@
 /.bundle
 /vendor/bundle/
 /vendor/ruby/
+.vagrant
 
 # minimal Rails specific artifacts
 db/*.sqlite3
