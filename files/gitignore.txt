@@ -9,6 +9,7 @@
 /vendor/bundle/
 /vendor/ruby/
 .vagrant
+tags
 
 # minimal Rails specific artifacts
 db/*.sqlite3
@@ -19,7 +20,6 @@ db/*.sqlite3
 **.war
 *.rbc
 *.sassc
-.rspec
 .redcar/
 .sass-cache
 /config/config.yml

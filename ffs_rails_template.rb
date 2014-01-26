@@ -58,9 +58,15 @@ end
 # Run bundler
 run "bundle install --without production --path vendor/bundle"
 
+# Copy config and initializers files
+copy_from 'https://raw.github.com/jcarley/rails-template/master/files/config/initializers/reload_api.rb', 'config/initializers/reload_api.rb'
+copy_from 'https://raw.github.com/jcarley/rails-template/master/files/zeus.json', 'zeus.json'
+copy_from 'https://raw.github.com/jcarley/rails-template/master/files/custom_plan.rb', 'custom_plan.rb'
+copy_from 'https://raw.github.com/jcarley/rails-template/master/files/Vagrantfile', 'Vagrantfile'
+
 # We have to add the .gitignore before install figaro
 copy_from 'https://raw.github.com/jcarley/rails-template/master/files/gitignore.txt', '.gitignore'
-copy_from 'https://raw.github.com/jcarley/rails-template/master/files/Procfile', 'Procfile'
+copy_from 'https://raw.github.com/jcarley/rails-template/master/files/rspec.txt', '.rspec'
 
 
 ## Front-end Framework
@@ -73,6 +79,8 @@ generate 'figaro:install'
 
 ### AUTHORIZATION ###
 generate 'model User first_name last_name email'
+generate 'devise:install'
+generate 'devise User'
 generate 'cancan:ability'
 generate 'rolify:role Role User'
 
@@ -93,6 +101,9 @@ inject_into_file 'config/application.rb', :after => "Rails::Application\n" do <<
         request_specs: true
       g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
+
+    config.paths.add "\#{Rails.root}/app/api", glob: "**/*.rb"
+    config.autoload_paths += %W(\#{Rails.root}/app)
 
 RUBY
 end

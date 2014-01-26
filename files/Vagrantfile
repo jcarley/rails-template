@@ -11,13 +11,13 @@ Vagrant.configure("2") do |config|
     puppet.options = ["--verbose"]
   end
 
-  config.vm.define :devweb01 do |config|
+  config.vm.define :ffsdevweb01 do |config|
 
-    box_name = 'devweb01'
+    box_name = 'ffsdevweb01'
     host_name = "local.#{box_name}.com"
 
     config.vm.provider :virtualbox do |vb|
-      vb.name = "mytechbooks"
+      vb.name = "carleyfamily"
       vb.customize ["modifyvm", :id,
                    "--name", box_name,
                    "--memory", "1024",
