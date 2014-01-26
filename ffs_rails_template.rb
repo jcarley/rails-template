@@ -12,19 +12,17 @@ Rails.application.config.generators do |g|
 end
 RUBY
 
-gem "pg"
 gem "puma"
 gem 'slim-rails'
 gem 'devise'
 gem "cancan"
-gem "rolify"
+gem "rolify", "~> 3.2.0"
 gem 'figaro'
 gem "zurb-foundation"
 gem 'foreigner'
 gem 'immigrant'
 gem 'grape'
 gem 'api-auth'
-
 
 gem_group :development do
   gem 'zeus'
@@ -88,7 +86,7 @@ generate 'rolify:role Role User'
 generate 'rspec:install'
 run 'rm -rf test/' # Removing test folder (not needed for RSpec)
 
-inject_into_file 'config/application.rb', :after => "Rails::Application\n" do <<-RUBY
+inject_into_file 'config/application.rb', :after => "Rails::Application\n" do <<-'RUBY'
 
     # don't generate RSpec tests for views and helpers
     config.generators do |g|
@@ -102,8 +100,8 @@ inject_into_file 'config/application.rb', :after => "Rails::Application\n" do <<
       g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
 
-    config.paths.add "\#{Rails.root}/app/api", glob: "**/*.rb"
-    config.autoload_paths += %W(\#{Rails.root}/app)
+    # config.paths.add "#{Rails.root}/app/api", glob: "**/*.rb"
+    # config.autoload_paths += %W(#{config.root}/lib)
 
 RUBY
 end
@@ -125,10 +123,13 @@ gsub_file 'Gemfile', /\n^\s*\n/, "\n"
 gsub_file 'config/routes.rb', /  #.*\n/, "\n"
 gsub_file 'config/routes.rb', /\n^\s*\n/, "\n"
 
+create_file 'README.md', ''
 append_file 'README.md' do <<-README
 Add your application description here
 README
 end
+
+run ''
 
 git :init
 git :add => '. -A'
