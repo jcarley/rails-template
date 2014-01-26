@@ -14,13 +14,7 @@ def copy_from_repo(filename, opts = {})
   source_filename = filename
   destination_filename = filename
 
-  unless opts[:prefs].nil?
-    if filename.include? opts[:prefs]
-      destination_filename = filename.gsub(/\-#{opts[:prefs]}/, '')
-    end
-  end
-
-  copy_from repo + source_filename, destination_filename
+  get repo + source_filename, destination_filename
 end
 
 def copy_from_manifest(filename)
