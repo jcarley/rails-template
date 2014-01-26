@@ -7,6 +7,30 @@ def copy_from(source, destination)
   end
 end
 
+def copy_from_repo(filename, opts = {})
+  repo = 'https://raw.github.com/jcarley/rails-template/master/files/'
+  repo = opts[:repo] unless opts[:repo].nil?
+
+  source_filename = filename
+  destination_filename = filename
+
+  unless opts[:prefs].nil?
+    if filename.include? opts[:prefs]
+      destination_filename = filename.gsub(/\-#{opts[:prefs]}/, '')
+    end
+  end
+
+  copy_from repo + source_filename, destination_filename
+end
+
+def copy_from_manifest(filename)
+  File.open(filename, "r") do |file|
+    file.each do |line|
+      copy_from_repo line
+    end
+  end
+end
+
 initializer 'generators.rb', <<-RUBY
 Rails.application.config.generators do |g|
 end
@@ -55,6 +79,10 @@ end
 
 # Run bundler
 run "bundle install --without production --path vendor/bundle"
+
+copy_from_repo 'puppet_manifest.txt'
+copy_from_manifest 'puppet_manifest.txt'
+remove_file 'puppet_manifest.txt'
 
 # Copy config and initializers files
 copy_from 'https://raw.github.com/jcarley/rails-template/master/files/config/initializers/reload_api.rb', 'config/initializers/reload_api.rb'
