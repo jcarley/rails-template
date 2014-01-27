@@ -20,7 +20,7 @@ end
 def copy_from_manifest(filename)
   File.open(filename, "r") do |file|
     file.each do |line|
-      copy_from_repo line
+      copy_from_repo line.strip
     end
   end
 end
@@ -79,15 +79,22 @@ copy_from_manifest 'puppet_manifest.txt'
 remove_file 'puppet_manifest.txt'
 
 # Copy config and initializers files
-copy_from 'https://raw.github.com/jcarley/rails-template/master/files/config/initializers/reload_api.rb', 'config/initializers/reload_api.rb'
-copy_from 'https://raw.github.com/jcarley/rails-template/master/files/zeus.json', 'zeus.json'
-copy_from 'https://raw.github.com/jcarley/rails-template/master/files/custom_plan.rb', 'custom_plan.rb'
-copy_from 'https://raw.github.com/jcarley/rails-template/master/files/Vagrantfile', 'Vagrantfile'
+copy_from_repo 'config/initializers/reload_api.rb'
+copy_from_repo 'zeus.json'
+copy_from_repo 'custom_plan.rb'
+copy_from_repo'Vagrantfile'
+copy_from_repo 'config/postgresql_database.yml.erb'
+
+template 'config/postgresql_database.yml.erb', 'config/database.yml', :force => true
 
 # We have to add the .gitignore before install figaro
 copy_from 'https://raw.github.com/jcarley/rails-template/master/files/gitignore.txt', '.gitignore'
 copy_from 'https://raw.github.com/jcarley/rails-template/master/files/rspec.txt', '.rspec'
 
+# Copy base api files
+copy_from_repo 'app/api/api.rb'
+copy_from_repo 'app/api/helpers.rb'
+copy_from_repo 'app/api/resources/greeting.rb'
 
 ## Front-end Framework
 generate 'foundation:install'
@@ -122,8 +129,8 @@ inject_into_file 'config/application.rb', :after => "Rails::Application\n" do <<
       g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
 
-    # config.paths.add "#{Rails.root}/app/api", glob: "**/*.rb"
-    # config.autoload_paths += %W(#{config.root}/lib)
+    config.paths.add "#{Rails.root}/app/api", glob: "**/*.rb"
+    config.autoload_paths += %W(#{config.root}/lib)
 
 RUBY
 end
